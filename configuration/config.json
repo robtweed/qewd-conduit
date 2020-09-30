@@ -1,0 +1,8 @@
+{
+  "qewd_up": true,
+  "qewd": {
+    "port": 8080,
+    "serverName": "QEWD Conduit Server",
+    "managementPassword": "secret"
+  }
+}

@@ -1,0 +1,5 @@
+[
+  "slugify",
+  "bcrypt",
+  "email-validator"
+]

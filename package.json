@@ -1,26 +1,12 @@
 {
-  "name": "qewd-conduit",
-  "version": "1.6.2",
-  "description": "QEWD-based Conduit RESTFUL Back-end",
-  "main": "index.js",
+  "name": "qewd-up",
+  "version": "1.0.0",
+  "description": "Automated QEWD Builder",
+  "author": "Rob Tweed <rtweed@mgateway.com>",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node node_modules/qewd/up/run_native"
   },
   "dependencies": {
-    "qewd-router": "",
-    "bcrypt": "",
-    "email-validator": "",
-    "valid-url": "",
-    "slugify": ""
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/robtweed/qewd-conduit.git"
-  },
-  "author": "Rob Tweed, M/Gateway Developments Ltd",
-  "license": "Apache-2.0",
-  "bugs": {
-    "url": "https://github.com/robtweed/qewd-conduit/issues"
-  },
-  "homepage": "https://github.com/robtweed/qewd-conduit#readme"
+    "qewd": ""
+  }
 }

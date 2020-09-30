@@ -1,0 +1,108 @@
+[
+  {
+    "uri": "/api/ping",
+    "method": "GET",
+    "handler": "ping"
+  },
+  {
+    "uri": "/api/users/login",
+    "method": "POST",
+    "handler": "authenticateUser"
+  },
+  {
+    "uri": "/api/users",
+    "method": "POST",
+    "handler": "registerUser"
+  },
+  {
+    "uri": "/api/user",
+    "method": "GET",
+    "handler": "getUser"
+  },
+  {
+    "uri": "/api/user",
+    "method": "PUT",
+    "handler": "updateUser"
+  },
+  {
+    "uri": "/api/profiles/:username",
+    "method": "GET",
+    "handler": "getProfile"
+  },
+  {
+    "uri": "/api/profiles/:username/follow",
+    "method": "POST",
+    "handler": "follow"
+  },
+  {
+    "uri": "/api/profiles/:username/follow",
+    "method": "DELETE",
+    "handler": "unfollow"
+  },
+  {
+    "uri": "/api/articles",
+    "method": "GET",
+    "handler": "getArticlesList"
+  },
+  {
+    "uri": "/api/articles/feed",
+    "method": "GET",
+    "handler": "getArticlesFeed"
+  },
+  {
+    "uri": "/api/articles/:slug",
+    "method": "GET",
+    "handler": "getArticleBySlug"
+  },
+  {
+    "uri": "/api/articles",
+    "method": "POST",
+    "handler": "createArticle"
+  },
+  {
+    "uri": "/api/articles/:slug",
+    "method": "PUT",
+    "handler": "updateArticle"
+  },
+  {
+    "uri": "/api/articles/:slug",
+    "method": "DELETE",
+    "handler": "deleteArticle"
+  },
+  {
+    "uri": "/api/articles/:slug/comments",
+    "method": "POST",
+    "handler": "addComment"
+  },
+  {
+    "uri": "/api/articles/:slug/comments",
+    "method": "GET",
+    "handler": "getComments"
+  },
+  {
+    "uri": "/api/articles/:slug/comments/:id",
+    "method": "DELETE",
+    "handler": "deleteComment"
+  },
+  {
+    "uri": "/api/articles/:slug/favorite",
+    "method": "POST",
+    "handler": "favourite"
+  },
+  {
+    "uri": "/api/articles/:slug/favorite",
+    "method": "DELETE",
+    "handler": "unfavourite"
+  },
+  {
+    "uri": "/api/tags",
+    "method": "GET",
+    "handler": "getTags"
+  },
+  {
+    "else": {
+      "text": "Resource Not Found",
+      "statusCode": 404
+    }
+  }
+]
