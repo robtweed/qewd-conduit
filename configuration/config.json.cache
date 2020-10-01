@@ -1,0 +1,18 @@
+{
+  "qewd": {
+    "port": 8080,
+    "poolsize": 2,
+    "serverName": "QEWD Conduit Server",
+    "managementPassword": "secret",
+    "database": {
+      "type": "dbx",
+      "params": {
+        "database": "Cache",
+        "path": "C:\\InterSystems\\Cache2015\\Mgr",
+        "username": "_SYSTEM",
+        "password": "SYS",
+        "namespace": "USER"
+      }
+    }
+  }
+}

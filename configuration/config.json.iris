@@ -1,0 +1,18 @@
+{
+  "qewd": {
+    "port": 8080,
+    "poolsize": 2,
+    "serverName": "QEWD Conduit Server",
+    "managementPassword": "secret",
+    "database": {
+      "type": "dbx",
+      "params": {
+        "database": "IRIS",
+        "path": "C:\\InterSystems\\IRIS\\mgr",
+        "username": "_SYSTEM",
+        "password": "SYS",
+        "namespace": "USER"
+      }
+    }
+  }
+}
