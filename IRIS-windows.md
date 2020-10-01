@@ -132,7 +132,7 @@ become more familiar with using QEWD.  The customisable settings
 (*port*, *poolSize*, *serverName* and *managementPassword*) are
 [described here](./CONFIG.md).
 
-**Note: ** If you are using the free Community Edition of IRIS, you'll find that QEWD will
+ **Note:** If you are using the free Community Edition of IRIS, you'll find that QEWD will
 run very nicely with a *poolSize* of 2.  If you want to run IRIS Terminal and/or
 IRIS Studio whilst also running QEWD, this is pretty much the *poolSize* limit,
 but feel free to experiment.  Even with a *poolSize* of 2, you'll find the
@@ -181,7 +181,7 @@ When it completes, you're ready to start QEWD
 ## Starting QEWD for the First Time
 
 
-**IMPORTANT: ** If you are using the free Community Edition of IRIS, you need to 
+ **IMPORTANT:** If you are using the free Community Edition of IRIS, you need to 
 make sure that enough IRIS license slots are available for the next step.  It is
 recommended that you close IRIS Terminal and Studio, and log out of the
 IRIS System Management Portal.
