@@ -7,7 +7,9 @@ This repo is functionality complete — PR's and issues welcome!
 ----------
  
 Rob Tweed <rtweed@mgateway.com>  
-25 January 2017, M/Gateway Developments Ltd [http://www.mgateway.com](http://www.mgateway.com)  
+25 January 2017, M/Gateway Developments Ltd [http://www.mgateway.com](http://www.mgateway.com)
+
+Updated: 1 October 2020
 
 Twitter: @rtweed
 
