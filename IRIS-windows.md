@@ -194,6 +194,10 @@ Start QEWD for the first time as follows:
 
         npm start
 
+You will almost certainly get a Windows Defender Firewall dialog box appearing,
+asking you if you want to allow incoming connections from Node.js.  You should
+accept/allow these connections and the QEWD installation will commence.
+
 The first time you start QEWD, it installs a bunch of extra things, so you'll see
 new sub-folders named *www* and *qewd-apps* appear. QEWD has loaded in everything you need
 for monitoring your system and for developing interactive applications if you wish to do so.
