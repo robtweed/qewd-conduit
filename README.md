@@ -85,6 +85,13 @@ Just ensure you
 configure your chosen front-end to send its REST requests to the endpoints provided by
 your installed QEWD Conduit back-end.
 
+As an example, Ward De Backer has provided 
+[detailed documentation](https://github.com/wdbacker/qewd-howtos/blob/master/VueRealWorldConduit.md)
+ on how to install
+and use the 
+[Vue RealWorld Example application client](https://github.com/gothinkster/vue-realworld-example-app)
+ with a *qewd-conduit* Back-end.
+
 
 ## Inspecting the *qewd-conduit* Database
 
