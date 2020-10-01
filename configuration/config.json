@@ -3,6 +3,7 @@
   "qewd": {
     "port": 8080,
     "serverName": "QEWD Conduit Server",
-    "managementPassword": "secret"
+    "managementPassword": "secret",
+    "cors": true
   }
 }

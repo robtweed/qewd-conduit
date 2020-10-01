@@ -4,6 +4,7 @@
     "poolsize": 2,
     "serverName": "QEWD Conduit Server",
     "managementPassword": "secret",
+    "cors": true,
     "database": {
       "type": "dbx",
       "params": {

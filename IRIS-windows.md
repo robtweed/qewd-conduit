@@ -107,6 +107,7 @@ If you open it in an editor, you'll see that it contains:
             "poolsize": 2,
             "serverName": "QEWD Conduit Server",
             "managementPassword": "secret",
+            "cors": true,
             "database": {
               "type": "dbx",
               "params": {
