@@ -26,8 +26,9 @@ Google Group for discussions, support, advice etc: [http://groups.google.co.uk/g
   QEWD itself is a Node.js-based Web Application & REST run-time platform.
 
   *qewd-conduit* can work with a number of so-called Global Storage databases, including:
-    - [InterSystems IRIS](https://www.intersystems.com/products/intersystems-iris/)
-    - [InterSystems Cach&eacute;](https://www.intersystems.com/products/cache/)
+
+- [InterSystems IRIS](https://www.intersystems.com/products/intersystems-iris/)
+- [InterSystems Cach&eacute;](https://www.intersystems.com/products/cache/)
 
 
   QEWD applies an
