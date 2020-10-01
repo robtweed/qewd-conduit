@@ -72,7 +72,7 @@ Google Group for discussions, support, advice etc: [http://groups.google.co.uk/g
 
 See the instructions for the following platforms:
 
-- [IRIS running on Windows](./IRIS-windows.md)
+- [IRIS running on Windows](https://github.com/robtweed/qewd-conduit/blob/master/IRIS-windows.md)
 
 
 ## Installing and Running the *RealWorld* Front-End
