@@ -79,9 +79,9 @@ versions of the RealWorld front-ends that use the
 [QEWD-Client](https://github.com/robtweed/qewd-client) to communicate securely
 via WebSockets with the *qewd-conduit* back-end.  
 
-Ward De Backer has
-created a suitably-adapted version of the Vue.js RealWorld front-end application that 
-you can use to try out the *qewd-conduit* WebSocket interfaces.  For instructions, see
+Ward De Backer has created a 
+[suitably-adapted version of the Vue.js RealWorld front-end application](https://github.com/wdbacker/vue-realworld-example-app)
+ that you can use to try out the *qewd-conduit* WebSocket interfaces.  For instructions, see
 later in this document.
 
 ## Installing and Running the *qewd-conduit* Back-end
@@ -108,7 +108,8 @@ and use the
 [Vue RealWorld Example application client](https://github.com/gothinkster/vue-realworld-example-app)
  with a *qewd-conduit* Back-end.
 
-His documentation also explains how to use his specially-adapted WebSocket-enabled version
+His documentation also explains how to use his 
+[specially-adapted WebSocket-enabled version](https://github.com/wdbacker/vue-realworld-example-app)
 of this same Vue.js client.  You'll then be able to compare and contrast the relative performance of
 the REST and WebSocket interfaces for the same set of APIs (which, within *qewd-conduit*, 
 as you might expect, invoke the exact same underlying API handler logic modules)
