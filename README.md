@@ -24,49 +24,65 @@ Google Group for discussions, support, advice etc: [http://groups.google.co.uk/g
   application using [QEWD](http://qewdjs.com).
 
   *qewd-conduit* requires [QEWD](https://github.com/robtweed/qewd) to be installed on your server.
-  This is a quick and almost completely automated process which is described later in this document.
   QEWD itself is a Node.js-based Web Application & REST run-time platform.
+
+  The QEWD installation and configuration process is very quick and almost completely automated.
+  You'll find that you can install *qewd-conduit* and have it fully up and running in
+  literally just a few minutes, so there are really no reasons not to try it out!
 
   *qewd-conduit* can work with a number of so-called Global Storage databases, including:
 
 - [InterSystems IRIS](https://www.intersystems.com/products/intersystems-iris/)
 - [InterSystems Cach&eacute;](https://www.intersystems.com/products/cache/)
 
+QEWD applies an abstraction known as [QEWD-JSdb](https://github.com/robtweed/qewd-jsdb) to these databases, 
+which makes them behave as a Document Database and Persistent JavaScript Objects
 
-  QEWD applies an
-  abstraction known as [QEWD-JSdb](https://github.com/robtweed/qewd-jsdb) to these databases, 
-  which makes them behave as a Document Database and Persistent JavaScript Objects
-
-  [Read my article](https://robtweed.wordpress.com/2017/04/18/having-your-node-js-cake-and-eating-it-too/) 
-  that explains the rationale and objectives of QEWD.
+[Read my article](https://robtweed.wordpress.com/2017/04/18/having-your-node-js-cake-and-eating-it-too/) 
+that explains the rationale and objectives of QEWD.
   
-  Since the back-end specification of the RealWorld Conduit application is 
-  [fully documented](https://github.com/gothinkster/realworld/tree/master/api) 
-  and implemented using 
-  [several other technologies and/or frameworks](https://github.com/gothinkster/realworld), 
-  it provides a great way of comparing and contrasting the different development approaches
-  used for each option.
+Since the back-end specification of the RealWorld Conduit application is 
+[fully documented](https://github.com/gothinkster/realworld/tree/master/api) 
+and implemented using 
+[several other technologies and/or frameworks](https://github.com/gothinkster/realworld), 
+it provides a great way of comparing and contrasting the different development approaches
+used for each option.
 
-  Although QEWD is a Node.js-based platform, you'll see that the way in which the back-end has
-  been able to be developed is quite different from what you'd expect.  Whilst it's all
-  been written in JavaScript, there's no asynchronous logic, even for the database
-  manipulation.  That's possible due to QEWD's master process / queue / worker process-pool
-  architecture.
+Although QEWD is a Node.js-based platform, you'll see that the way in which the back-end has
+been able to be developed is quite different from what you'd expect.  Whilst it's all
+been written in JavaScript, there's no asynchronous logic, even for the database
+manipulation.  That's possible due to QEWD's master process / queue / worker process-pool
+architecture.
 
-  The RealWorld Conduit initiative also allows direct comparisons to be made in terms of
-  back-end performance.  I think you'll be favourably impressed by the performance of 
-  *qewd-conduit* which is largely down to the lightning-fast performance of the underlying
-  database (IRIS or Cach&eacute;) and the 
-  [in-process Node.js database interface](https://github.com/chrisemunt/mg-dbx) used by QEWD.
+The RealWorld Conduit initiative also allows direct comparisons to be made in terms of
+back-end performance.  I think you'll be favourably impressed by the performance of 
+*qewd-conduit* which is largely down to the lightning-fast performance of the underlying
+database (IRIS or Cach&eacute;) and the 
+[in-process Node.js database interface](https://github.com/chrisemunt/mg-dbx) used by QEWD.
 
-  What may be less easy to appreciate is the speed of development when using the different
-  RealWorld Conduit back-end technologies.  I can tell you that, in the case of *qewd-conduit*, 
-  the entire back-end was implemented from scratch in just 2 man-days, including the time taken
-  to read up on and understand the application's objectives, requirements and APIs.  Part of
-  the speed of development comes from not having to worry about asynchronous logic, but it's
-  also due to the very high-level database abstraction of
-  [QEWD-JSdb](https://github.com/robtweed/qewd-jsdb).
+What may be less easy to appreciate is the speed of development when using the different
+RealWorld Conduit back-end technologies.  I can tell you that, in the case of *qewd-conduit*, 
+the entire back-end was implemented from scratch in just 2 man-days, including the time taken
+to read up on and understand the application's objectives, requirements and APIs.  Part of
+the speed of development comes from not having to worry about asynchronous logic, but it's
+also due to the very high-level database abstraction of
+[QEWD-JSdb](https://github.com/robtweed/qewd-jsdb).
 
+## WebSocket Support
+
+Uniquely amongst RealWorld Conduit back-end implementations, *qewd-conduit* not only
+implements the full suite of Conduit REST APIs, but also provides equivalent APIs that
+are accessed via WebSockets.
+
+These make use of QEWD's built-in WebSocket support, and require specially-adapted
+versions of the RealWorld front-ends that use the 
+[QEWD-Client](https://github.com/robtweed/qewd-client) to communicate securely
+via WebSockets with the *qewd-conduit* back-end.  
+
+Ward De Backer has
+created a suitably-adapted version of the Vue.js RealWorld front-end application that 
+you can use to try out the *qewd-conduit* WebSocket interfaces.  For instructions, see
+later in this document.
 
 ## Installing and Running the *qewd-conduit* Back-end
 
@@ -91,6 +107,11 @@ As an example, Ward De Backer has provided
 and use the 
 [Vue RealWorld Example application client](https://github.com/gothinkster/vue-realworld-example-app)
  with a *qewd-conduit* Back-end.
+
+His documentation also explains how to use his specially-adapted WebSocket-enabled version
+of this same Vue.js client.  You'll then be able to compare and contrast the relative performance of
+the REST and WebSocket interfaces for the same set of APIs (which, within *qewd-conduit*, 
+as you might expect, invoke the exact same underlying API handler logic modules)
 
 
 ## Inspecting the *qewd-conduit* Database
