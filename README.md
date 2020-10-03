@@ -2,7 +2,7 @@
 
 > ### Example QEWD Back-end codebase that adheres to the [RealWorld](https://github.com/gothinkster/realworld-example-apps) spec and API.
 
-This repo is functionality complete � PR's and issues welcome!
+This repo is functionality complete - PR's and issues welcome!
 
 ----------
  
