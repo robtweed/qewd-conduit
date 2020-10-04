@@ -2,7 +2,7 @@
 
 > ### Example QEWD Back-end codebase that adheres to the [RealWorld](https://github.com/gothinkster/realworld-example-apps) spec and API.
 
-This repo is functionality complete — PR's and issues welcome!
+This repo is functionality complete - PR's and issues welcome!
 
 ----------
  
@@ -101,18 +101,23 @@ Just ensure you
 configure your chosen front-end to send its REST requests to the endpoints provided by
 your installed QEWD Conduit back-end.
 
-As an example, Ward De Backer has provided 
-[detailed documentation](https://github.com/wdbacker/qewd-howtos/blob/master/VueRealWorldConduit.md)
- on how to install
-and use the 
-[Vue RealWorld Example application client](https://github.com/gothinkster/vue-realworld-example-app)
- with a *qewd-conduit* Back-end.
+As an example, Ward De Backer has provided:
+- [detailed documentation](https://github.com/wdbacker/qewd-howtos/blob/master/VueRealWorldConduit.md) 
+  on how to install and use the [Vue RealWorld Example application client](https://github.com/gothinkster/vue-realworld-example-app) 
+  with a *qewd-conduit* Back-end
+- [detailed documentation](https://github.com/wdbacker/qewd-howtos/blob/master/ReactRealWorldConduit.md) 
+  on how to install and use the [React Redux RealWorld Example application client](https://github.com/gothinkster/react-redux-realworld-example-app) 
+  with a *qewd-conduit* Back-end
+- [detailed documentation](https://github.com/wdbacker/qewd-howtos/blob/master/AngularRealWorldConduit.md) 
+  on how to install and use the [Angular RealWorld Example application client](https://github.com/gothinkster/angular-realworld-example-app) 
+  with a *qewd-conduit* Back-end
 
-His documentation also explains how to use his 
+His [documentation](https://github.com/wdbacker/qewd-howtos/blob/master/VueRealWorldConduitWS.md) 
+also explains how to use his 
 [specially-adapted WebSocket-enabled version](https://github.com/wdbacker/vue-realworld-example-app)
 of this same Vue.js client.  You'll then be able to compare and contrast the relative performance of
 the REST and WebSocket interfaces for the same set of APIs (which, within *qewd-conduit*, 
-as you might expect, invoke the exact same underlying API handler logic modules)
+as you might expect, invoke the exact same underlying API handler logic modules).
 
 
 ## Inspecting the *qewd-conduit* Database
