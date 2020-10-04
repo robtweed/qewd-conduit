@@ -141,8 +141,8 @@ In summary:
       has the same signature, with all the incoming REST request's information being
       represented appropriately in the *args* argument.
 
-      On completion, each handler module returns it JSON response object as the argument
-      of a special QEWD-supplied function called *finished()*.  This function returns the
+      On completion, each handler module returns its JSON response object as the sole argument
+      of a special QEWD-supplied function called *finished()*.  This *finished()* function returns the
       JSON response to the REST client and also releases the QEWD Worker process back to
       the available Worker pool.
 
