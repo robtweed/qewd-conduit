@@ -9,7 +9,7 @@ This repo is functionality complete - PR's and issues welcome!
 Rob Tweed <rtweed@mgateway.com>  
 25 January 2017, M/Gateway Developments Ltd [http://www.mgateway.com](http://www.mgateway.com)
 
-Updated: 1 October 2020
+Updated: 4 October 2020
 
 Twitter: @rtweed
 
@@ -118,6 +118,58 @@ also explains how to use his
 of this same Vue.js client.  You'll then be able to compare and contrast the relative performance of
 the REST and WebSocket interfaces for the same set of APIs (which, within *qewd-conduit*, 
 as you might expect, invoke the exact same underlying API handler logic modules).
+
+
+## How the *qewd-conduit* Back-end Works
+
+*qewd-conduit* has been developed following the standard, so-called
+[QEWD-Up approach (click for details)](https://github.com/robtweed/qewd/tree/master/up).
+
+In summary:
+
+- the system configuration is described in the */configuration/config.json* file;
+
+- the REST API routes are described in the */configuration/routes.json* file.  Each
+  route is described as an object that defines its:
+  - URI;
+  - HTTP method; and 
+  - handler name
+    - the correspondingly-named handler modules can be found in the */apis* directory
+    - the handler logic is in each handler module's *index.js* file.  
+
+      Every handler module
+      has the same signature, with all the incoming REST request's information being
+      represented appropriately in the *args* argument.
+
+      On completion, each handler module returns it JSON response object as the argument
+      of a special QEWD-supplied function called *finished()*.  This function returns the
+      JSON response to the REST client and also releases the QEWD Worker process back to
+      the available Worker pool.
+
+- the WebSocket interfaces can be found in the */qewd-apps/qewd-conduit* directory.  There is
+  a named handler module for each supported WebSocket message, and these correspond by name to
+  the *qewd-conduit* REST handler names.  if you look at the *index.js* file for each WebSocket
+  handler module, you'll see that they are all simply wrapper stubs, calling another module
+  that converts the WebSocket message contents into the corresponding REST handler module's
+  *args* object, and then invokes the corresponding REST handler method.  In other words, the
+  WebSocket interface is simply (but very effectively!) a wrapper around the REST handler methods.
+
+- the physical database handling for the persistent objects used in *qewd-conduit* is encapsulated as
+  as set of APIs which are used by the various REST API handler methods.  This is done in order to
+  keep all the physical database handling logic for each persistent object into just one place, rather
+  than it being spread around within the REST API handler methods.
+
+  The database objects are described in the */conduit/db* directory
+
+  In there, you'll see that there are just three persistent objects in *qewd-conduit*,
+  with corresponding handler API modules:
+
+  - users (*/conduit/db/users.js*)
+  - articles (*/conduit/db/articles.js*)
+  - comments (*/conduit/db/comments.js*)
+
+  Each of these modules defines the CRUD methods used to maintain and access the persistent
+  object using the [QEWD-JSdb](https://github.com/robtweed/qewd-jsdb) abstraction methods.
 
 
 ## Inspecting the *qewd-conduit* Database
