@@ -23,7 +23,7 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  29 September 2020
+  5 October 2020
 
 */
 
@@ -176,19 +176,24 @@ function getFeed(userId, offset, max) {
   tempDoc.delete();  // clear down just in case
 
   // get articles written by user's followed users
+  let total = 0;
+  let allFound = false;
   let skipped = 0;
   let count = 0;
   followsDoc.forEachChild(function(followsId) {
     articlesAuthorIndex.$(followsId).forEachChild(function(articleId) {
-      if (offset > 0 && skipped < offset) {
-        skipped++;
-      }
-      else {
-        let ts = articlesDoc.$(['byId', articleId, 'timestampIndex']).value;
-         // add to temporary index by reverse timestamp
-        tempDoc.$(ts).value = articleId;
-        count++;
-        if (count === max) return true;
+      total++;
+      if (!allFound) {
+        if (offset > 0 && skipped < offset) {
+          skipped++;
+        }
+        else {
+          let ts = articlesDoc.$(['byId', articleId, 'timestampIndex']).value;
+           // add to temporary index by reverse timestamp
+          tempDoc.$(ts).value = articleId;
+          count++;
+          if (count === max) allFound = true;
+        }
       }
     });
   });
@@ -205,7 +210,7 @@ function getFeed(userId, offset, max) {
 
   return {
     articles: articles,
-    articlesCount: count
+    articlesCount: total
   };
 }
 
@@ -231,18 +236,23 @@ function byAuthor(username, byUserId, offset, max) {
 
   let articlesDoc = this.db.use('conduitArticles');
 
+  let total = 0;
+  let allFound = false;
   let skipped = 0;
   let count = 0;
   articlesDoc.$(['byAuthor', userId]).forEachChild(function(articleId) {
-    if (offset > 0 && skipped < offset) {
-      skipped++;
-    }
-    else {
-      let ts = articlesDoc.$(['byId', articleId, 'timestampIndex']).value;
-       // add to temporary index by reverse timestamp
-      tempDoc.$(ts).value = articleId;
-      count++;
-      if (count === max) return true;
+    total++;
+    if (!allFound) {
+      if (offset > 0 && skipped < offset) {
+        skipped++;
+      }
+      else {
+        let ts = articlesDoc.$(['byId', articleId, 'timestampIndex']).value;
+         // add to temporary index by reverse timestamp
+        tempDoc.$(ts).value = articleId;
+        count++;
+        if (count === max) allFound = true;
+      }
     }
   });
 
@@ -261,7 +271,7 @@ function byAuthor(username, byUserId, offset, max) {
 
   return {
     articles: articles,
-    articlesCount: count
+    articlesCount: total
   };
 }
 
@@ -273,18 +283,23 @@ function byTag(tag, byUserId, offset, max) {
 
   let articlesDoc = this.db.use('conduitArticles');
 
+  let total = 0;
+  let allFound = false;
   let skipped = 0;
   let count = 0;
   articlesDoc.$(['byTag', tag]).forEachChild(function(articleId) {
-    if (offset > 0 && skipped < offset) {
-      skipped++;
-    }
-    else {
-      let ts = articlesDoc.$(['byId', articleId, 'timestampIndex']).value;
-      // add to temporary index by reverse timestamp
-      tempDoc.$(ts).value = articleId;
-      count++;
-      if (count === max) return true;
+    total++;
+    if (!allFound) {
+      if (offset > 0 && skipped < offset) {
+        skipped++;
+      }
+      else {
+        let ts = articlesDoc.$(['byId', articleId, 'timestampIndex']).value;
+        // add to temporary index by reverse timestamp
+        tempDoc.$(ts).value = articleId;
+        count++;
+        if (count === max) allFound = true;
+      }
     }
   });
 
@@ -303,7 +318,7 @@ function byTag(tag, byUserId, offset, max) {
 
   return {
     articles: articles,
-    articlesCount: count
+    articlesCount: total
   };
 }
 
@@ -319,19 +334,23 @@ function favoritedBy(username, byUserId, offset, max) {
   let articlesDoc = this.db.use('conduitArticles');
   let favDoc = this.db.use('conduitUsers', 'byId', userId, 'favorited');
 
-
+  let total = 0;
+  let allFound = false;
   let skipped = 0;
   let count = 0;
   favDoc.forEachChild(function(articleId) {
-    if (offset > 0 && skipped < offset) {
-      skipped++;
-    }
-    else {
-      let ts = articlesDoc.$(['byId', articleId, 'timestampIndex']).value;
-       // add to temporary index by reverse timestamp
-      tempDoc.$(ts).value = articleId;
-      count++;
-      if (count === max) return true;
+    total++;
+    if (!allFound) {
+      if (offset > 0 && skipped < offset) {
+        skipped++;
+      }
+      else {
+        let ts = articlesDoc.$(['byId', articleId, 'timestampIndex']).value;
+         // add to temporary index by reverse timestamp
+        tempDoc.$(ts).value = articleId;
+        count++;
+        if (count === max) allFound = true;
+      }
     }
   });
 
@@ -350,7 +369,7 @@ function favoritedBy(username, byUserId, offset, max) {
 
   return {
     articles: articles,
-    articlesCount: count
+    articlesCount: total
   };
 }
 
@@ -358,27 +377,34 @@ function latest(byUserId, offset, max) {
 
   let skipped = 0;
   let count = 0;
+  let total = 0;
+  let allFound = false;
   let _this = this;
   let articles = [];
 
   let articlesDoc = this.db.use('conduitArticles');
 
   articlesDoc.$('byTimestamp').forEachChild(function(ts, childNode) {
-    if (offset > 0 && skipped < offset) {
-      skipped++;
-    }
-    else {
-      let articleId = childNode.value;
-      let article = get.call(_this, articleId, byUserId);
-      articles.push(article);
-      count++;
-      if (count === max) return true;
+    total++;
+    if (!allFound) {
+      if (offset > 0 && skipped < offset) {
+        skipped++;
+      }
+      else {
+        let articleId = childNode.value;
+        let article = get.call(_this, articleId, byUserId);
+        articles.push(article);
+        count++;
+        if (count === max) {
+          allFound = true;
+        }
+      }
     }
   });
 
   return {
     articles: articles,
-    articlesCount: count
+    articlesCount: total
   };
 
 }

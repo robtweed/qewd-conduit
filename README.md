@@ -171,6 +171,10 @@ In summary:
   Each of these modules defines the CRUD methods used to maintain and access the persistent
   object using the [QEWD-JSdb](https://github.com/robtweed/qewd-jsdb) abstraction methods.
 
+  The QEWD-JSdb modelling of these persistent Objects, and how they map to
+physical Global Storage is 
+[described in this article](https://github.com/robtweed/qewd-conduit/blob/master/QEWD-JSdb.md).
+
 
 ## Inspecting the *qewd-conduit* Database
 
