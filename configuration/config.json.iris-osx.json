@@ -1,0 +1,19 @@
+{
+  "qewd": {
+    "port": 8080,
+    "poolsize": 2,
+    "serverName": "QEWD Conduit Server",
+    "managementPassword": "secret",
+    "cors": true,
+    "database": {
+      "type": "dbx",
+      "params": {
+        "database": "IRIS",
+        "path": "/Users/rtweed/IRIS/mgr",
+        "username": "_SYSTEM",
+        "password": "SYS",
+        "namespace": "USER"
+      }
+    }
+  }
+}

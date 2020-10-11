@@ -1,0 +1,16 @@
+{
+  "name": "qewd-conduit",
+  "version": "1.0.0",
+  "description": "QEWD Conduit",
+  "author": "Rob Tweed <rtweed@mgateway.com>",
+  "scripts": {
+    "start": "node node_modules/qewd/up/run_native"
+  },
+  "dependencies": {
+    "qewd": "",
+    "slugify": "",
+    "bcrypt": "",
+    "email-validator": "",
+    "mg-dbx": ""
+  }
+}

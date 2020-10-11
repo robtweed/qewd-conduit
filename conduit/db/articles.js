@@ -23,7 +23,7 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  5 October 2020
+  9 October 2020
 
 */
 
@@ -324,8 +324,12 @@ function byTag(tag, byUserId, offset, max) {
 
 function favoritedBy(username, byUserId, offset, max) {
 
+  //console.log('db/articles/favouritedBy');
+  //console.log('username = ' + username + '; offset = ' + offset + '; max = ' + max);
+
   let userId = db.users.idByUsername.call(this, username);
   if (userId === '') return {error: 'notFound'};
+  //console.log('userId = ' + userId);
 
   // use a temporary global storage document for easy sorting by timestamp
   let tempDoc = this.db.use('conduitTemp', process.pid);
@@ -339,20 +343,27 @@ function favoritedBy(username, byUserId, offset, max) {
   let skipped = 0;
   let count = 0;
   favDoc.forEachChild(function(articleId) {
-    total++;
-    if (!allFound) {
-      if (offset > 0 && skipped < offset) {
-        skipped++;
-      }
-      else {
-        let ts = articlesDoc.$(['byId', articleId, 'timestampIndex']).value;
-         // add to temporary index by reverse timestamp
-        tempDoc.$(ts).value = articleId;
-        count++;
-        if (count === max) allFound = true;
+    //console.log('articleId = ' + articleId);
+    //console.log('count = ' + count);
+    let articleDoc = articlesDoc.$(['byId', articleId]);
+    if (articleDoc.exists) {
+      total++;
+      if (!allFound) {
+        if (offset > 0 && skipped < offset) {
+          skipped++;
+        }
+        else {
+          let ts = articleDoc.$('timestampIndex').value;
+          //console.log('ts = ' + ts);
+           // add to temporary index by reverse timestamp
+          tempDoc.$(ts).value = articleId;
+          count++;
+          if (count === max) allFound = true;
+        }
       }
     }
   });
+  //console.log('done');
 
   // now spin through the temporary document to pull out articles latest first
   let articles = [];

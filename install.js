@@ -24,7 +24,7 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  30 September 2020
+  6 October 2020
 
 */
 
@@ -170,6 +170,7 @@ module.exports = function() {
     if (!config.qewd_up) {
       config.qewd_up = true;
     }
+    /*
     if (!config.qewd) {
       config.qewd = {
         bodyParser: 'body-parser'
@@ -178,6 +179,7 @@ module.exports = function() {
     if (!config.qewd.bodyParser) {
       config.qewd.bodyParser = 'body-parser';
     }
+    */
   }
   catch(err) {
     console.log('Error! Unable to load ' + config_path);
@@ -185,7 +187,7 @@ module.exports = function() {
     config = {
       qewd_up: true,
       qewd: {
-        bodyParser: 'body-parser'
+        //bodyParser: 'body-parser'
       }
     };
   }
