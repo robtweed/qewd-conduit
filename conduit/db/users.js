@@ -23,7 +23,7 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  29 September 2020
+  21 October 2020
 
 */
 
@@ -141,7 +141,7 @@ function update(id, newData) {
 
   let userDoc = this.db.use('conduitUsers', 'byId', id);
 
-  if (newData.password) {
+  if (newData.password && newData.pasword !== '') {
     let salt = bcrypt.genSaltSync(10);
     let hash = bcrypt.hashSync(newData.password, salt);
     userDoc.$('password').value = hash;

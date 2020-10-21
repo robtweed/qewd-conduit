@@ -23,7 +23,7 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  9 October 2020
+  20 October 2020
 
 */
 
@@ -95,8 +95,8 @@ function create(authorId, data) {
   articlesDoc.$(['byAuthor', authorId, articleId]).value = articleId;
   articlesDoc.$(['byTimestamp', ts]).value = articleId;
 
-  if (article.tagList) {
-    article.tagList.forEach(function(tag) {
+  if (data.tagList) {
+    data.tagList.forEach(function(tag) {
       articlesDoc.$(['byTag', tag, articleId]).value = articleId;
     });
   }
@@ -148,11 +148,32 @@ function del(articleId) {
 }
 
 function getTags() {
+  let max = 100;
   let tags = [];
+  let tagsByCount = {};
   let tagsDoc = this.db.use('conduitArticles', 'byTag');
-  tagsDoc.forEachChild(function(tag) {
-    tags.push(tag);
+  tagsDoc.forEachChild(function(tag, node) {
+    let count = 0;
+    node.forEachChild(function(id) {
+      count++;
+    });
+    let reverseCount = 1000000 - count;
+    if (!tagsByCount[reverseCount]) tagsByCount[reverseCount] = [];
+    tagsByCount[reverseCount].push(tag);
   });
+  let count;
+  let stop = false;
+  for (count in tagsByCount) {
+    tagsByCount[count].forEach(function(tag) {
+      if (tags.length < max) {
+        tags.push(tag);
+      }
+      else {
+        stop = true;
+      }
+    });
+    if (stop) break;
+  }
   return tags;
 }
 
@@ -422,6 +443,9 @@ function latest(byUserId, offset, max) {
 
 function update(articleId, userId, newData) {
 
+  //console.log('updating article ' + articleId);
+  //console.log('newData: ' + JSON.stringify(newData, null, 2));
+
   let articlesDoc = this.db.use('conduitArticles');
   let articleDoc = articlesDoc.$(['byId', articleId]);
 
@@ -463,25 +487,45 @@ function update(articleId, userId, newData) {
 
   //update tags
 
-  if (newData.tagList) {
-    // remove the current tags from the index
-    if (article.tagList) {
-      article.tagList.forEach(function(tag) {
-        articlesDoc.$(['byTag', tag, articleId]).delete();
-      });
-    }
+  //first remove all the tags from the data record
+  // and remove from the corresponding index
 
-    // now update tags in article and create new taglist index
+  articleDoc.$('tagList').forEachChild(function(tag) {
+    articlesDoc.$(['byTag', tag, articleId]).delete();
+  });
+  articleDoc.$('tagList').delete();  
 
-    article.tagList = newData.tagList;
-    newData.tagList.forEach(function(tag) {
-      articlesDoc.$(['byTag', tag, articleId]).value = articleId;
-    });
-  }
+
+  // now update tags in article and create new taglist index
+
+  article.tagList = newData.tagList;
+  newData.tagList.forEach(function(tag) {
+    articlesDoc.$(['byTag', tag, articleId]).value = articleId;
+  });
 
   // update main article database record
 
   articleDoc.setDocument(article);
+}
+
+function rebuildIndices() {
+  let articlesDoc = this.db.use('conduitArticles');
+  articlesDoc.$('byAuthor').delete();
+  articlesDoc.$('bySlug').delete();
+  articlesDoc.$('byTag').delete();
+  articlesDoc.$('byTimestamp').delete();
+  let articleDoc = articlesDoc.$('byId');
+  articleDoc.forEachChild(function(id, node) {
+    let article = node.getDocument(true);
+    articlesDoc.$(['byAuthor', article.author, id]).value = id;
+    articlesDoc.$(['bySlug', article.slug]).value = id;
+    if (article.tagList) {
+      article.tagList.forEach(function(tag) {
+        articlesDoc.$(['byTag', tag, id]).value = id;
+      });
+    }
+    articlesDoc.$(['byTimestamp', article.timestampIndex]).value = id;
+  });
 }
 
 module.exports = {
@@ -496,5 +540,6 @@ module.exports = {
   getIdBySlug: getIdBySlug,
   getTags: getTags,
   latest: latest,
-  getFeed: getFeed
+  getFeed: getFeed,
+  rebuildIndices: rebuildIndices
 };

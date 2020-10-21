@@ -23,7 +23,7 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  29 September 2020
+  21 October 2020
 
 */
 
@@ -33,6 +33,10 @@ const db = require('../db/objects');
 const getUser = require('../user/getUser');
 const emailValidator = require('email-validator');
 
+function validImgURL(url) {
+  return(url.match(/\.(jpeg|jpg|gif|png)$/) != null);
+}
+
 function update(args, session) {
 
   let errors = {};
@@ -40,6 +44,7 @@ function update(args, session) {
   let email = args.email;
   let password = args.password;
   let id = args.id;
+  let image = args.image;
   let currentUsername = args.currentUsername;
 
   // check that username is valid and doesn't already exist
@@ -72,8 +77,20 @@ function update(args, session) {
 
   // check that password is valid
 
-  if (password && password.length < 6) {
+  if (password && password !== '' && password.length < 6) {
     errors = errorHandler.add('password', "must be 6 or more characters in length", errors);
+  }
+
+  // prevent XSS attempts via image
+
+  if (image && image !== '') {
+
+    if (!image.startsWith('http://') && !image.startsWith('https://')) {
+      errors = errorHandler.add('picture_url', "is not a URL", errors);  
+    }
+    else if (!validImgURL(image)) {
+      errors = errorHandler.add('picture_url', "is not a valid image URL", errors); 
+    }
   }
 
   if (errorHandler.hasErrors(errors)) return {error: errors};

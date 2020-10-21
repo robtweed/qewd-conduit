@@ -1,8 +1,9 @@
 /*
+
  ----------------------------------------------------------------------------
- | qewd-conduit: QEWD Implementation of the Conduit Back-end                |
+ | qewd-jsdb-shell: For use in Node REPL                                    |
  |                                                                          |
- | Copyright (c) 2017-20 M/Gateway Developments Ltd,                        |
+ | Copyright (c) 2019 M/Gateway Developments Ltd,                           |
  | Redhill, Surrey UK.                                                      |
  | All rights reserved.                                                     |
  |                                                                          |
@@ -23,40 +24,64 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  21 October 2020
+  2 December 2019
 
 */
 
-const validation = require('../../conduit/utilities/validation');
-const errorHandler = require('../../conduit/utilities/errorHandler');
-const updateUser = require('../../conduit/user/updateUser');
+var http = require('http');
+
+const ydb_release = 'r1.28';
 
 
-module.exports = function(args, finished) {
+function jsdb() {
+  var qewd_mg_dbx = require('qewd-mg-dbx');
+  var DocumentStore = require('ewd-document-store');
+  var os = require('os');
+  var arch = os.arch();
+  if (arch === 'x64') arch = 'x86';
 
-  // Update User
+  var params = {
+    database: {
+      type: 'YottaDB',
+      release: ydb_release,
+      architecture: arch
+    }
+  };
 
-  // first, validate request object...
+  var db = new qewd_mg_dbx(params);
+  var status = db.open();
+  if (status.error) return status;
+  var documentStore = new DocumentStore(db);
+  documentStore.close = db.close.bind(db);
 
-  // check for body and optional fields
+  var displayInViewer = function(glo) {
+    var viewer_refresh_url = 'http://localhost:8080/jsdb/viewer/refresh?global=' + glo.documentName;
+    http.get(viewer_refresh_url, function(response) {
+    });
+  };
 
-  let errors = validation.bodyAndFields(args, 'user', null, ['email', 'username']);
-  if (errorHandler.hasErrors(errors)) return errorHandler.errorResponse(errors, finished);
+  var viewerEnabled = false;
 
-  let params = args.req.body.user;
+  documentStore.viewer = {
+    enable: function() {
+      if (!viewerEnabled) {
+        documentStore.on('afterSet', displayInViewer);
+        documentStore.on('afterDelete', displayInViewer);
+        viewerEnabled = true;
+      }
+    },
+    disable: function() {
+      if (viewerEnabled)
+      documentStore.removeListener('afterSet', displayInViewer);
+      documentStore.removeListener('afterDelete', displayInViewer);
+      viewerEnabled = false;
+    }
+  };
+  documentStore.viewer.enable();
 
-  // validate JWT and get the payload contents
+  return documentStore;
 
-  let status = validation.jwt.call(this, args);
-  if (status.error) return finished(status);
-  let session = status.session;
-  params.id = status.payload.id;
-  params.currentUsername = status.payload.username;
-
-  let results = updateUser.call(this, params, session);
-
-  if (results.error) {
-    return errorHandler.errorResponse(results.error, finished);
-  }
-  finished(results);
 };
+
+module.exports = jsdb();
+
