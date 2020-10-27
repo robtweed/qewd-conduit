@@ -23,12 +23,14 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  29 September 2020
+  27 October 2020
 
 */
 
 const errorHandler = require('./errorHandler');
 const db = require('../db/objects');
+const jwt_simple = require('jwt-simple');
+var uuid = require('uuid/v4');
 
 function isEmptyObject(obj) {
   let name;
@@ -61,7 +63,61 @@ function authenticate(args) {
     };
   }
 
-  return this.sessions.authenticateByJWT(jwtToken);
+  let payload;
+
+  try {
+    payload = jwt_simple.decode(jwtToken, null, true);
+  }
+  catch(err) {
+    return {
+      error: 'Invalid JWT: ' + err,
+      status: {
+        code: 401
+      }
+    };
+  }
+  if (!payload) {
+    return {
+      error: 'Missing JWT payload',
+      status: {
+        code: 401
+      }
+    };
+  }
+  if (payload.iss !== 'qewd:conduit') {
+    return {
+      error: 'Invalid JWT Issuer',
+      status: {
+        code: 401
+      }
+    };
+  }
+  if (!payload.email) {
+    return {
+      error: 'No email in JWT',
+      status: {
+        code: 401
+      }
+    };
+  }
+
+  let id = db.users.idByEmail.call(this, payload.email);
+
+  if (!id) {
+    return {
+      error: 'Unrecognised email in JWT',
+      status: {
+        code: 401
+      }
+    };
+  }
+
+  // JWT is OK - allow the user to continue
+
+  payload.id = id;
+  return {
+    payload: payload
+  }
 }
 
 function bodyAndFields(args, category, requiredFields, optionalFields) {
@@ -101,7 +157,7 @@ function bodyAndFields(args, category, requiredFields, optionalFields) {
 }
 
 function jwt(args) {
-  // validate JWT, and if OK, return session, payload and pointers to user document and user's specific document
+  // validate JWT, and if OK, payload and pointers to user document and user's specific document
 
   let status = authenticate.call(this, args);
   if (status.error) return status;
@@ -136,6 +192,23 @@ function jwt(args) {
   };
 }
 
+function createJWT(payload, secret, expiryTime, application) {
+  // expiryTime is in seconds
+  expiryTime = expiryTime || 5184000; // 60 days default
+  application = application || 'conduit';
+  if (!payload) return '';
+  let now = Date.now();
+  let iat = Math.floor(now/1000);
+  payload.exp = iat + expiryTime;
+  payload.iat = iat;
+  payload.iss = 'qewd:' + application;
+  payload.jti = uuid();
+  
+  var jwtToken = jwt_simple.encode(payload, secret);
+  return jwtToken;
+}
+
+
 function decodeJWT(jwt) {
   let status = this.sessions.authenticateByJWT(jwt);
   if (status.error) return status;
@@ -153,5 +226,6 @@ module.exports = {
   bodyAndFields,
   jwt,
   decodeJWT,
-  matches
+  matches,
+  createJWT
 };

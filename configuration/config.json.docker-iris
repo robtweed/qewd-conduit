@@ -1,0 +1,21 @@
+{
+  "qewd_up": true,
+  "qewd": {
+    "port": 8080,
+    "poolsize": 2,
+    "serverName": "QEWD Conduit Server",
+    "managementPassword": "secret",
+    "cors": true,
+    "database": {
+      "type": "dbx",
+      "params": {
+        "database": "IRIS",
+        "host": "my-iris",
+        "tcp_port": 7041,
+        "username": "_SYSTEM",
+        "password": "secret",
+        "namespace": "USER"
+      }
+    }
+  }
+}

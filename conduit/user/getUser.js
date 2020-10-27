@@ -23,44 +23,26 @@
  |  limitations under the License.                                          |
  ----------------------------------------------------------------------------
 
-  29 September 2020
+  27 October 2020
 
 */
 
 const db = require('../db/objects');
+const validation = require('../utilities/validation');
 
-function getUser(id, session) {
+function getUser(id) {
 
   let user = db.users.get.call(this, id);  // get raw User object
 
-  if (!session) {
-    // create a new Session
-    session = this.sessions.create({
-      application: 'conduit',
-      timeout: 5184000, // 60 days timeout !! as advised by RealWorld team for now
-      jwtPayload: {
-        id: id,
-        username: user.username
-      }
-    });
-    session.authenticated = true;
-    user.token = session.jwt;
-  }
-  else {
-    let payload;
-    if (session.jwt === '') {
-      payload = {
-        id: id,
-        username: user.username
-      };
-      user.token = session.createJWT(payload);
-    }
-    else {
-      // make sure the JWT uses the most recent username
-      payload = {username: user.username};
-      user.token = session.updateJWT(payload);
-    }
-  }
+  // update the JWT that is returned along with the user object
+
+  let payload = {
+    email: user.email
+  };
+
+  let secret = this.userDefined.config.jwt.secret;
+  user.token = validation.createJWT(payload, secret);
+
   delete user.password;
   delete user.follows;
   return user;
