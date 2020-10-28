@@ -10,7 +10,7 @@
 
 # Introduction
 
-The instructions below explain how to installl and run the *qewd-courier* Back-end,
+The instructions below explain how to installl and run the *qewd-conduit* Back-end,
  running on either Linux systems or on a Raspberry Pi, connecting to the Open-Source
 YottaDB database.
 
