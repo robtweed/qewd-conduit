@@ -8,6 +8,8 @@ echo ""
 echo "******* QEWD-Conduit Installer *******"
 echo ""
 
+
+
 VOLUME=${1-$PWD}
 PLATFORM=$(uname -m)
 
@@ -18,6 +20,9 @@ if [ -x "$(command -v docker)" ]; then
     # command
 else
     echo "Installing docker..."
+
+    sudo apt-get update
+    sudo apt-get install -y curl
 
     curl -sSL https://get.docker.com | sh
     sudo usermod -aG docker ${USER}
