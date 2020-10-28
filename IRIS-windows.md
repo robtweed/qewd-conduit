@@ -5,7 +5,7 @@
 - [Introduction](#introduction)
 - [Initial Steps](#initial-steps)
 - [Installing *qewd-conduit*](#installing-qewd-conduit)
-
+- [Running *qewd-conduit*](#running-qewd-conduit)
 
 ----
 
@@ -74,6 +74,8 @@ On completion, you should now have a structure that includes:
             |_ conduit
             |
             |_ configuration
+            |
+            |_ www
             |
             |_ package.json
 
@@ -165,6 +167,8 @@ eg your top-level folder structure should now include:
             |_ apis
             |
             |_ conduit
+            |
+            |_ www
             |
             |_ package.json
             |
@@ -278,11 +282,10 @@ If QEWD is correctly running, you'll get the JSON response
         {pong: true}
 
 
-
 ## Optional: Try the QEWD-Monitor Application
 
 
-You can check that your *Orchestrator* instance is working correctly by running the
+You can check that your *qewd-conduit* instance is working correctly by running the
 *qewd-monitor* application that will now have been installed:
 
 Start the QEWD-Monitor application in your browser using the URL:
@@ -295,12 +298,41 @@ or try the latest version:
 
 
 You'll need to enter the QEWD Management password.  Use the value that you
-specified in the *managementPassword* property in your *Orchestrator's* *config.json* file.
+specified in the *managementPassword* property in the *qewd-conduit* *config.json* file.
 
 You'll now see the Overview panel, from where you can monitor your QEWD run-time environment, view the master and worker process activity.
 
-If the *qewd-monitor* application works correctly, then you can be sure that the *Orchestrator*
+If the *qewd-monitor* application works correctly, then you can be sure that *qewd-conduit*
 is working correctly and is ready for use.
+
+
+## Running the *wc-conduit* RealWorld Client
+
+Your *qewd-conduit* installation includes a pre-installed,
+copy of the [*wc-conduit*](https://github.com/robtweed/wc-conduit)
+RealWorld front-end client.  To run it, simply enter the following
+URL into your browser:
+
+        http://x.x.x.x:8080/conduit-wc
+
+For example:
+
+        http://192.168.1.100:8080/conduit-wc
+
+It is pre-configured to use your *qewd-conduit* system's REST APIs.
+
+If you want to compare your *qewd-conduit* back-end's operation with
+another Conduit back-end, simply edit the *wc-conduit* *userSettings*
+file that you'll find at:
+
+        C:\qewd-conduit\www\conduit-wc\js\userSettings.js
+
+The file contains self-explanatory comments that describe what you need to do to 
+modify its configuration.
+
+Alternatively, you can, of course, use any other of the available RealWorld front-ends: they
+should all work identically with your *qewd-conduit* system, provided you
+re-configure them to send their REST requests to your *qewd-conduit* back-end.
 
 
 ## Stopping QEWD

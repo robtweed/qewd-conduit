@@ -26,7 +26,9 @@ Google Group for discussions, support, advice etc: [http://groups.google.co.uk/g
   *qewd-conduit* requires [QEWD](https://github.com/robtweed/qewd) to be installed on your server.
   QEWD itself is a Node.js-based Web Application & REST run-time platform.
 
-  The QEWD installation and configuration process is very quick and almost completely automated.
+  QEWD is available in both Dockerised and natively-installed formats.  Which you choose
+  is up to you, but even for the non-Dockerised version, the installation and configuration
+  process is very quick and almost completely automated.
   You'll find that you can install *qewd-conduit* and have it fully up and running in
   literally just a few minutes, so there are really no reasons not to try it out!
 
@@ -34,9 +36,15 @@ Google Group for discussions, support, advice etc: [http://groups.google.co.uk/g
 
 - [InterSystems IRIS](https://www.intersystems.com/products/intersystems-iris/)
 - [InterSystems Cach&eacute;](https://www.intersystems.com/products/cache/)
+- [YottaDB](https://yottadb.com)
+
+The Dockerised version of QEWD includes a pre-installed and pre-configured instance
+of YottaDB, but it can also be quickly and simply reconfigured to connect to a Cach&eacute; or IRIS
+database over a networked connection.
 
 QEWD applies an abstraction known as [QEWD-JSdb](https://github.com/robtweed/qewd-jsdb) to these databases, 
-which makes them behave as a Document Database and Persistent JavaScript Objects
+which makes them all behave identically as a Document Database and Persistent JavaScript Objects.
+Applications written in JavaScript for QEWD will run identically on all three supported databases.
 
 [Read my article](https://robtweed.wordpress.com/2017/04/18/having-your-node-js-cake-and-eating-it-too/) 
 that explains the rationale and objectives of QEWD.
@@ -50,14 +58,15 @@ used for each option.
 
 Although QEWD is a Node.js-based platform, you'll see that the way in which the back-end has
 been able to be developed is quite different from what you'd expect.  Whilst it's all
-been written in JavaScript, there's no asynchronous logic, even for the database
-manipulation.  That's possible due to QEWD's master process / queue / worker process-pool
+been written in JavaScript, the persistent JavaScript Object manipulation logic 
+(which is physically interacting with the database) is not asynchronous.  
+That's possible due to QEWD's master process / queue / worker process-pool
 architecture.
 
 The RealWorld Conduit initiative also allows direct comparisons to be made in terms of
 back-end performance.  I think you'll be favourably impressed by the performance of 
 *qewd-conduit* which is largely down to the lightning-fast performance of the underlying
-database (IRIS or Cach&eacute;) and the 
+databases (YottaDB, IRIS or Cach&eacute;) and the 
 [in-process Node.js database interface](https://github.com/chrisemunt/mg-dbx) used by QEWD.
 
 What may be less easy to appreciate is the speed of development when using the different
@@ -89,6 +98,8 @@ later in this document.
 See the instructions for the following platforms:
 
 - [IRIS running on Windows](https://github.com/robtweed/qewd-conduit/blob/master/IRIS-windows.md)
+- [YottaDB running on Linux or Raspberry Pi](https://github.com/robtweed/qewd-conduit/blob/master/YOTTADB.md)
+- [QEWD Docker Container](https://github.com/robtweed/qewd-conduit/blob/master/QEWD-Docker.md)
 
 
 ## Installing and Running the *RealWorld* Front-End
@@ -97,8 +108,17 @@ See the instructions for the following platforms:
 use any of the authorized client interfaces, the details and instructions for which
 [can be seen here](https://github.com/gothinkster/realworld#frontends).  
 
-Just ensure you
-configure your chosen front-end to send its REST requests to the endpoints provided by
+Your *qewd-conduit* installation also includes a pre-installed and pre-configured copy
+of the [*wc-conduit*](https://github.com/robtweed/wc-conduit) front-end client.
+This uses our WebComponent-based mini-framework known as 
+[*mg-webComponents*](https://github.com/robtweed/mg-webComponents), to
+provide a very fast and lightweight RealWorld front-end client.  The
+pre-installed version is configured to use your *qewd-conduit* back-end's
+REST APIs, but it can be re-configured in a matter of seconds to use any
+other available Conduit back-end.
+
+If you decide to use a different RealWorld front-end client, ensure you
+configure it to send its REST requests to the endpoints provided by
 your installed QEWD Conduit back-end.
 
 As an example, Ward De Backer has provided:

@@ -1,0 +1,13 @@
+{
+  "qewd": {
+    "poolSize": 2,
+    "port": 3000,
+    "managementPassword": "secret",
+    "serverName": "QEWD-Up Server",
+    "database": {
+      "type": "dbx"
+    },
+    "sessionDocumentName": "qs"
+  },
+  "use_jwt": true
+}
