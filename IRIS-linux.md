@@ -1,4 +1,4 @@
-# Installing and Running *qewd-conduit* with IRIS on Windows
+# Installing and Running *qewd-conduit* with IRIS on Linux or OSX
 
 ## Contents
 
@@ -12,7 +12,7 @@
 # Introduction
 
 The instructions below explain how to installl and run the *qewd-conduit* Back-end,
- running on Windows with the IRIS database.
+ running on either Linux or OSX with the IRIS database.
 
 ----
 
@@ -36,17 +36,15 @@ Next, navigate the System Management Portal menus as follows:
 - Check the *Service Enabled* box and Click *Save*
 
 
-## Install Node.js
-
-You first need to [install Node.js](https://nodejs.org) on your Windows machine(s). Node.js versions 12.x and 14.x are supported.
-
-Do not install earlier versions of Node.js, and if you already have an earlier version of Node.js
-installed, you will need to update it.
-
 ## Install *git*
 
 You'll need to ensure that you can clone the *qewd-conduit* Github Repository, so make sure
-you have [*git* installed](https://git-scm.com) on your Windows system.
+you have installed *git*.  If not:
+
+        sudo apt-get update
+        sudo apt-get install git
+
+(or the equivalent for your Linux distribution or OSX)
 
 
 # Installing *qewd-conduit*
@@ -54,20 +52,23 @@ you have [*git* installed](https://git-scm.com) on your Windows system.
 
 ## Clone the *qewd-conduit* Github Repository
 
-It's up to you to decide where to install *qewd-conduit* within your Windows' directory
-structure.  In this document I'm going to assume you'll install it in a folder directly
-under your *C:\* drive.  Adjust any paths described in this document appropriately if you
-decide to install in some other drive/directory path.
+It's up to you to decide where to install *qewd-conduit* within your Linux or
+OSX directory structure.  In this document I'm going to assume you'll 
+install it in a folder directly under your *home (~)* directory.  Adjust any 
+paths described in this document appropriately if you
+decide to install in some other directory path.
 
-In a Windows Command Prompt window, type the following:
+In a Terminal/Shell session, type the following:
 
-        cd c:\
+        cd ~
         git clone https://github.com/robtweed/qewd-conduit
 
 
 On completion, you should now have a structure that includes:
 
-        C:\qewd-conduit
+        ~/qewd-conduit
+            |
+            |_ install-scripts
             |
             |_ apis
             |
@@ -80,8 +81,31 @@ On completion, you should now have a structure that includes:
             |_ package.json
 
 
-You'll also see some other folders and files, but these are used for other *qewd-conduit*
-configurations and platforms, so they can be ignored.
+You'll also see some other folders and files.  Many of these are used for other *qewd-conduit*
+configurations and platforms, so they can be ignored, but others will also be explained
+later in this documentation.
+
+
+## Install Node.js
+
+You need to ensure that Node.js is installed on your Linux or OSX system. 
+*qewd-conduit* requires either Node.js versions 12.x and 14.x.
+
+Do not install earlier versions of Node.js, and if you already have an earlier version of Node.js
+installed, you will need to update it.
+
+If you don't already have Node.js installed, the easiest way to install it is to
+use the installer script that is included in the *qewd-conduit* folder.
+
+In a Terminal/Shell session, type the following:
+
+        cd ~
+        source qewd-conduit/install-scripts/install_node.sh
+
+You'll be asked your Linux password, and then installation will commence.
+
+On completion, you should have the latest version of Node.js installed
+on your Linux or OSX system.
 
 
 ## Edit the QEWD Configuration JSON file
@@ -89,16 +113,16 @@ configurations and platforms, so they can be ignored.
 If you look in the *configuration* sub-folder, you'll find a number of files, in particular:
 
 
-        C:\qewd-conduit
+        ~/qewd-conduit
             |
             |_ configuration
                  |
                  |- config.json
                  |
-                 |- config.json.iris
+                 |- config.json.iris-linux
 
 
-Delete the *config.json* file and rename *config.json.iris* to *config.json*
+Delete the *config.json* file and rename *config.json.iris-linux* to *config.json*
 
 You'll need to check the IRIS connection settings in your renamed *config.json* file.
 If you open it in an editor, you'll see that it contains:
@@ -114,7 +138,7 @@ If you open it in an editor, you'll see that it contains:
               "type": "dbx",
               "params": {
                 "database": "IRIS",
-                "path": "C:\\InterSystems\\IRIS\\mgr",
+                "path": "/Users/rtweed/IRIS/mgr",
                 "username": "_SYSTEM",
                 "password": "SYS",
                 "namespace": "USER"
@@ -143,26 +167,42 @@ performance and throughput of *qewd-conduit* will be more than adequate for even
 quite large numbers of concurrent client users.
 
 
+## Install the correct QEWD *package.json* file
+
+If you look in the *qewd-conduit* installation folder, you'll find two versions of
+the *package.json* file:
+
+
+        ~/qewd-conduit
+              |
+              |- package.json
+              |
+              |- package.json.non-windows
+
+
+Delete the *package.json* file and rename *package.json.non-windows* to *package.json*
+
+
 ## Install QEWD
 
 Everything is now ready for use, but first we must install QEWD and its
 dependencies. This step only needs doing once.
 
 
-In a Windows Command Prompt window, type the following:
+In a Terminal / Shell process, type the following:
 
 
-        cd C:\qewd-conduit
+        cd ~/qewd-conduit
 
         npm install
 
 
-You'll see it installing QEWD, and in the QEWD Installation folder (*c:\qewd-conduit*), 
+You'll see it installing QEWD, and in the QEWD Installation folder (*~/qewd-conduit*), 
 you'll see a sub-folder named *node_modules* and a file named *package-lock.json* appear, 
 eg your top-level folder structure should now include:
 
 
-        C:\qewd-conduit
+        ~/qewd-conduit
             |
             |_ apis
             |
@@ -194,22 +234,13 @@ IRIS System Management Portal.
 
 Start QEWD for the first time as follows:
 
-        cd C:\qewd-conduit
+        cd ~/qewd-conduit
 
         npm start
 
-You will almost certainly get a Windows Defender Firewall dialog box appearing,
-asking you if you want to allow incoming connections from Node.js.  You should
-accept/allow these connections and the QEWD installation will commence.
-
 The first time you start QEWD, it installs a bunch of extra things, so you'll see
-new sub-folders named *www* and *qewd-apps* appear. QEWD has loaded in everything you need
+new sub-folders such as *qewd-apps* appear. QEWD has loaded in everything you need
 for monitoring your system and for developing interactive applications if you wish to do so.
-
-When you're running QEWD with Cach&eacute; or IRIS on Windows, it will also have
-automatically downloaded and installed the correct version of the
-[*mg-dbx*](https://github.com/chrisemunt/mg-dbx) interface along with its associated
-ObjectScript code interface for Cach&eacute; or IRIS SQL.
 
 After this initial installation has completed, QEWD will stop and ask you
 to restart.
@@ -224,7 +255,7 @@ to restart.
 
 Each time you want to start QEWD, first make sure you're in your QEWD Installation folder, eg
 
-        cd \qewd-conduit
+        cd ~/qewd-conduit
 
 and then start QEWD by typing:
 
@@ -234,8 +265,6 @@ and then start QEWD by typing:
 QEWD is ready for use when you see this (the poolsize and port will depend on your *config.json* settings):
 
 
-
-        webServerRootPath = C:\qewd-orchestrator/orchestrator/www/
         route /api will be handled by qx.router
         Worker Bootstrap Module file written to node_modules/ewd-qoper8-worker.js
         ========================================================
@@ -325,7 +354,7 @@ If you want to compare your *qewd-conduit* back-end's operation with
 another Conduit back-end, simply edit the *wc-conduit* *userSettings*
 file that you'll find at:
 
-        C:\qewd-conduit\www\conduit-wc\js\userSettings.js
+        ~/qewd-conduit\www\conduit-wc\js\userSettings.js
 
 The file contains self-explanatory comments that describe what you need to do to 
 modify its configuration.
@@ -356,10 +385,5 @@ For example:
 - Click the red X button in the Master Process Title bar
 
 
-## Running *qewd-conduit* as a Service
-
-There are a number of ways to set up *qewd-conduit* to run as a Windows Service.
-[Read this document](https://www.slideshare.net/robtweed/ewd-3-training-course-part-29-running-ewdxpress-as-a-service-on-windows)
- for details of one potential option.
 
 

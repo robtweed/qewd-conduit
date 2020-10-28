@@ -9,7 +9,7 @@ This repo is functionality complete - PR's and issues welcome!
 Rob Tweed <rtweed@mgateway.com>  
 25 January 2017, M/Gateway Developments Ltd [http://www.mgateway.com](http://www.mgateway.com)
 
-Updated: 4 October 2020
+Updated: 28 October 2020
 
 Twitter: @rtweed
 
@@ -98,6 +98,7 @@ later in this document.
 See the instructions for the following platforms:
 
 - [IRIS running on Windows](https://github.com/robtweed/qewd-conduit/blob/master/IRIS-windows.md)
+- [IRIS running on Linux or OSX](https://github.com/robtweed/qewd-conduit/blob/master/IRIS-linux.md)
 - [YottaDB running on Linux or Raspberry Pi](https://github.com/robtweed/qewd-conduit/blob/master/YOTTADB.md)
 - [QEWD Docker Container](https://github.com/robtweed/qewd-conduit/blob/master/QEWD-Docker.md)
 

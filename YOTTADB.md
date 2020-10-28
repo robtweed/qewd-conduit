@@ -177,7 +177,7 @@ If you look in the *qewd-conduit* installation folder, you'll find two versions 
 the *package.json* file:
 
 
-        C:\qewd-conduit
+        ~/qewd-conduit
               |
               |- package.json
               |
@@ -262,8 +262,6 @@ and then start QEWD by typing:
 QEWD is ready for use when you see this (the poolsize and port will depend on your *config.json* settings):
 
 
-
-        webServerRootPath = C:\qewd-orchestrator/orchestrator/www/
         route /api will be handled by qx.router
         Worker Bootstrap Module file written to node_modules/ewd-qoper8-worker.js
         ========================================================
@@ -353,7 +351,7 @@ If you want to compare your *qewd-conduit* back-end's operation with
 another Conduit back-end, simply edit the *wc-conduit* *userSettings*
 file that you'll find at:
 
-        C:\qewd-conduit\www\conduit-wc\js\userSettings.js
+        ~/qewd-conduit\www\conduit-wc\js\userSettings.js
 
 The file contains self-explanatory comments that describe what you need to do to 
 modify its configuration.
