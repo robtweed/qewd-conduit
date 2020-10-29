@@ -359,6 +359,18 @@ file that you'll find at:
 The file contains self-explanatory comments that describe what you need to do to 
 modify its configuration.
 
+If you want to try out *qewd-conduit*'s alternative WebSocket APIs, simply
+load this URL instead:
+
+        http://x.x.x.x:8080/conduit-wc/index-ws.html
+
+For example:
+
+        http://192.168.1.100:8080/conduit-wc/index-ws.html
+
+You can read further information about the 
+[WebSocket version of the *wc-conduit* front-end here](https://github.com/robtweed/wc-conduit#running-wc-conduit-using-websocket-apis).
+
 Alternatively, you can, of course, use any other of the available RealWorld front-ends: they
 should all work identically with your *qewd-conduit* system, provided you
 re-configure them to send their REST requests to your *qewd-conduit* back-end.

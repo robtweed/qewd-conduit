@@ -86,9 +86,13 @@ are accessed via WebSockets.
 These make use of QEWD's built-in WebSocket support, and require specially-adapted
 versions of the RealWorld front-ends that use the 
 [QEWD-Client](https://github.com/robtweed/qewd-client) to communicate securely
-via WebSockets with the *qewd-conduit* back-end.  
+via WebSockets with the *qewd-conduit* back-end.
 
-Ward De Backer has created a 
+Your *qewd-conduit* installation includes a pre-installed and pre-configured copy
+of the [*wc-conduit*](https://github.com/robtweed/wc-conduit) front-end client which
+supports both the REST and WebSocket APIs of *qewd-conduit*.
+
+Alternatively, Ward De Backer has created a 
 [suitably-adapted version of the Vue.js RealWorld front-end application](https://github.com/wdbacker/vue-realworld-example-app)
  that you can use to try out the *qewd-conduit* WebSocket interfaces.  For instructions, see
 later in this document.
@@ -115,8 +119,9 @@ This uses our WebComponent-based mini-framework known as
 [*mg-webComponents*](https://github.com/robtweed/mg-webComponents), to
 provide a very fast and lightweight RealWorld front-end client.  The
 pre-installed version is configured to use your *qewd-conduit* back-end's
-REST APIs, but it can be re-configured in a matter of seconds to use any
-other available Conduit back-end.
+REST or WebSocket APIs.  It can be re-configured in a matter of seconds to use any
+other available Conduit back-end (in which case you must only use the REST API version
+of *wc-conduit*).
 
 If you decide to use a different RealWorld front-end client, ensure you
 configure it to send its REST requests to the endpoints provided by
