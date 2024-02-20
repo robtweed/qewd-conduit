@@ -344,15 +344,22 @@ module.exports = function() {
   // If they already exist, they may have data in them!
 
   var yottadb_path = '/node/yottadb';
-  var os = 'linux';
+  var os = 'linux'; // Default to Linux
+  
   if (process.env.PLATFORM === 'arm') {
-    os = 'rpi';
+    os = 'rpi'; // If running on Raspberry Pi
   }
-
+  
+  // Corrected URL: Use the raw content URL instead of tree/master
+  var yottadb_url = 'https://github.com/robtweed/yotta-gbldir-files/raw/master/r1.30/' + os;
+  
   if (!fs.existsSync(yottadb_path)) {
-    this.shell('svn export https://github.com/robtweed/yotta-gbldir-files/trunk/r1.30/' + os + '  ' + yottadb_path);
+    // Use curl to fetch individual files
+    this.shell('curl -o ' + yottadb_path + '/yottadb.dat ' + yottadb_url + '/yottadb.dat');
+    this.shell('curl -o ' + yottadb_path + '/yottadb.gld ' + yottadb_url + '/yottadb.gld');
+    this.shell('curl -o ' + yottadb_path + '/yottadb.mjl ' + yottadb_url + '/yottadb.mjl');
   }
-
+  
   // Create startup files for persistence and non-persistence
 
   console.log(' ');
